@@ -71,8 +71,10 @@ jobs:
       - name: Push changes to repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCH: ${{ inputs.release-branch }}
         run: |
-          git push --set-upstream origin ${{ inputs.release_branch }} && git push --tags
+          git push --set-upstream origin $RELEASE_BRANCH
+          git push --tags
 
       # Update Github Release
       - name: Update Github Release Documentation
