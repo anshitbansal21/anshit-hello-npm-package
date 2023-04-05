@@ -49,10 +49,12 @@ jobs:
       # build and update docs
       - name: Commit package.json changes and create log
         run: |
-          git checkout -b ${{ inputs.release_branch }}
+          git checkout -b $RELEASE_BRANCH
           touch a.txt
           git add a.txt
           git commit -m "check"
+        env:
+          RELEASE_BRANCH: ${{ inputs.release-branch }}
       # Commit Changes
       - name: Commit package.json changes and create log
         run: |
