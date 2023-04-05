@@ -18,7 +18,7 @@ on:
 
 jobs:
   release-new-version:
-    if: inputs.release-password == secrets.RELEASE_PASSWORD
+    if: ${{inputs.release-password}} == ${{secrets.RELEASE_PASSWORD}}
     runs-on: ubuntu-latest
     steps:
       # Checkout project repository
