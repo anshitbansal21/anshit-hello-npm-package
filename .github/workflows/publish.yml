@@ -41,7 +41,13 @@ jobs:
           echo "RELEASE_TAG=latest" >> $GITHUB_ENV
         env:
           RELEASE_TYPE: ${{ inputs.release-type }}
-
+      # build and update docs
+      - name: Commit package.json changes and create log
+        run: |
+          touch a.txt
+          git add a.txt
+          git commit -m "check"
+          git push
       # Commit Changes
       - name: Commit package.json changes and create log
         run: |
