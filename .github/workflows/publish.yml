@@ -11,6 +11,10 @@ on:
           - patch
           - minor
           - major
+      release-branch:
+        description: 'Enter name of the release branch you want to create'
+        required: true
+        type: string
 
 jobs:
   release-new-version:
@@ -45,10 +49,10 @@ jobs:
       # build and update docs
       - name: Commit package.json changes and create log
         run: |
+          git checkout -b ${{ inputs.release_branch }}
           touch a.txt
           git add a.txt
           git commit -m "check"
-          git push
       # Commit Changes
       - name: Commit package.json changes and create log
         run: |
@@ -64,9 +68,9 @@ jobs:
       # Push repository changes
       - name: Push changes to repository
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin && git push --tags
+          git push --set-upstream origin ${{ inputs.release_branch }} && git push --tags
 
       # Update Github Release
       - name: Update Github Release Documentation
