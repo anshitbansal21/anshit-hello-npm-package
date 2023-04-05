@@ -1,4 +1,4 @@
-name: Release Package 
+name: Release Package
 
 on:
   workflows_dispatch:
@@ -7,65 +7,65 @@ on:
         description: 'Release type (one of): patch, minor, major)'
         required: true
         type: choice
-        options: 
-          - patch 
-          - minor 
-          - major 
-jobs: 
-    release:
-      runs-on: ubuntu-latest
-      steps:
-        # Checkout project repository 
-        - name: Checkout
-          uses: actions/checkout@v3
+        options:
+          - patch
+          - minor
+          - major
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout project repository
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        # Setup Node.js environment 
-        - name: Setup Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: '18.x'
-            registry-url: 'https://registry.npmjs.org'
-            # Defaults to the user or organisation that owns the workflow file
-        
-        # Configure git
-        - name: Git Configuration 
-          run: |
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          # Defaults to the user or organisation that owns the workflow file
+
+      # Configure git
+      - name: Git Configuration
+        run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "Github Actions"
 
-        # Bump Package Version 
-        # Use tag latest 
-        - name: Bump Release Version
-          run: |
-            echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
-            echo "RELEASE_TAG=latest" >> $GITHUB_ENV
-          env: 
-            RELEASE_TYPE: ${{ inputs.release-type }}
+      # Bump Package Version
+      # Use tag latest
+      - name: Bump Release Version
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: ${{ inputs.release-type }}
 
-        # Commit Changes 
-        - name: Commit package.json changes and create log 
-          run: |
-            git add package.json 
-            git commit -m "chore: release ${{ env.NEW_VERSION }}"
-            git tag ${{ env.NEW_VERSION }}
+      # Commit Changes
+      - name: Commit package.json changes and create log
+        run: |
+          git add package.json 
+          git commit -m "chore: release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
 
-        # Publish version to public repository 
-        - run: npm publish 
-          env: 
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        
-        # Push repository changes 
-        - name: Push changes to repository 
-          env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            git push origin && git push --tags
-        
-        # Update Github Release 
-        - name: Update Github Release Documentation 
-          uses: softprops/action-gh-release@v1
-          with: 
-            tag_name: ${{ env.NEW_VERSION }}
-            generate_release_notes: true
-          env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Publish version to public repository
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Push repository changes
+      - name: Push changes to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin && git push --tags
+
+      # Update Github Release
+      - name: Update Github Release Documentation
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.NEW_VERSION }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
