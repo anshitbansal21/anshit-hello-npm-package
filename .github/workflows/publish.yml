@@ -12,7 +12,7 @@ on:
           - minor
           - major
 jobs:
-  release:
+  release-new-version:
     runs-on: ubuntu-latest
     steps:
       # Checkout project repository
@@ -63,7 +63,7 @@ jobs:
 
       # Update Github Release
       - name: Update Github Release Documentation
-        uses: softprops/action-gh-release@v1
+        uses: postman-eng/action-gh-release@v1
         with:
           tag_name: ${{ env.NEW_VERSION }}
           generate_release_notes: true
