@@ -1,0 +1,23 @@
+{
+  "name": "anshit-hello-npm-package",
+  "version": "1.0.0",
+  "description": "Hello npm ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anshitbansal21/anshit-hello-npm-package.git"
+  },
+  "keywords": [
+    "NPM",
+    "Tutorial"
+  ],
+  "author": "Anshit Bansal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anshitbansal21/anshit-hello-npm-package/issues"
+  },
+  "homepage": "https://github.com/anshitbansal21/anshit-hello-npm-package#readme"
+}
