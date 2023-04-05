@@ -11,14 +11,9 @@ on:
           - patch
           - minor
           - major
-      release-password:
-        description: 'Password to trigger the release workflow'
-        required: true
-        type: string
 
 jobs:
   release-new-version:
-    if: ${{inputs.release-password}} == 'anshit'
     runs-on: ubuntu-latest
     steps:
       # Checkout project repository
