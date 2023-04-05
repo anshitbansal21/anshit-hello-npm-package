@@ -1,7 +1,7 @@
 name: Release Package
 
 on:
-  workflows_dispatch:
+  workflow_dispatch:
     inputs:
       release-type:
         description: 'Release type (one of): patch, minor, major)'
