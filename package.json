@@ -1,6 +1,6 @@
 {
   "name": "anshit-hello-npm-package",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "description": "Hello npm ",
   "main": "index.js",
   "scripts": {
