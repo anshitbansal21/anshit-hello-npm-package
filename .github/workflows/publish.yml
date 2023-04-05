@@ -65,6 +65,7 @@ jobs:
       - name: Update Github Release Documentation
         uses: postman-eng/action-gh-release@v1
         with:
+          name: ${{ env.tag_name }}
           tag_name: ${{ env.NEW_VERSION }}
           generate_release_notes: true
         env:
