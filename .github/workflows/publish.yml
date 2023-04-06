@@ -11,7 +11,7 @@ on:
           - patch
           - minor
           - major
-       trigger_phrase:
+      trigger_phrase:
         description: 'Trigger phrase'
         required: true
         type: string
