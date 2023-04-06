@@ -47,9 +47,7 @@ jobs:
       - name: Setting up the release branch
         run: |
           git pull
-          git checkout -b release/new-version/npm/$RELEASE_TYPE
-        env:
-          RELEASE_TYPE: ${{ inputs.release-type }}
+          git checkout -b release/new-version/npm
 
       # Commit Changes
       - name: Commit package.json changes and create log
@@ -67,12 +65,11 @@ jobs:
       - name: Push changes to repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TYPE: ${{ inputs.release-type }}
         run: |
-          git push --set-upstream origin release/new-version/npm/$RELEASE_TYPE
+          git push --set-upstream origin release/new-version/npm
           git push --tags
           git checkout main 
-          git branch --delete release/new-version/npm/$RELEASE_TYPE
+          git branch --delete release/new-version/npm
 
       # Update Github Release
       - name: Update Github Release Documentation
