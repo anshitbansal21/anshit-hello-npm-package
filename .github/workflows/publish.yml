@@ -11,10 +11,6 @@ on:
           - patch
           - minor
           - major
-      release-branch:
-        description: 'Enter name of the release branch you want to create'
-        required: true
-        type: string
 
 jobs:
   release-new-version:
@@ -46,16 +42,15 @@ jobs:
           echo "RELEASE_TAG=latest" >> $GITHUB_ENV
         env:
           RELEASE_TYPE: ${{ inputs.release-type }}
+
       # build and update docs
-      - name: Commit package.json changes and create log
+      - name: Setting up the release branch
         run: |
           git pull
-          git checkout -b $RELEASE_BRANCH
-          touch a.txt
-          git add a.txt
-          git commit -m "check"
+          git checkout -b release/new-version/npm/$RELEASE_TYPE
         env:
-          RELEASE_BRANCH: ${{ inputs.release-branch }}
+          RELEASE_TYPE: ${{ inputs.release-type }}
+
       # Commit Changes
       - name: Commit package.json changes and create log
         run: |
@@ -72,12 +67,13 @@ jobs:
       - name: Push changes to repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_BRANCH: ${{ inputs.release-branch }}
+          RELEASE_TYPE: ${{ inputs.release-type }}
         run: |
-          git push --set-upstream origin $RELEASE_BRANCH
+          git push --set-upstream origin release/new-version/npm/$RELEASE_TYPE
           git push --tags
           git checkout main 
-          git branch --delete $RELEASE_BRANCH
+          git branch --delete release/new-version/npm/$RELEASE_TYPE
+
       # Update Github Release
       - name: Update Github Release Documentation
         uses: postman-eng/action-gh-release@v1
