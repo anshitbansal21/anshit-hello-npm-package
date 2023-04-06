@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RELEASE_PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
-    if: github.event.inputs.trigger_phrase == $RELEASE_PASSWORD
+    if: github.event.inputs.trigger_phrase == env.RELEASE_PASSWORD
     steps:
       # Checkout project repository
       - name: Checkout
