@@ -76,7 +76,7 @@ jobs:
         run: |
           git push --set-upstream origin $RELEASE_BRANCH
           git push --tags
-
+          git branch --delete $RELEASE_BRANCH
       # Update Github Release
       - name: Update Github Release Documentation
         uses: postman-eng/action-gh-release@v1
