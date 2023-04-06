@@ -11,10 +11,15 @@ on:
           - patch
           - minor
           - major
+       trigger_phrase:
+        description: 'Trigger phrase'
+        required: true
+        type: string
 
 jobs:
   release-new-version:
     runs-on: ubuntu-latest
+    if: github.event.inputs.trigger_phrase == 'run-me'
     steps:
       # Checkout project repository
       - name: Checkout
