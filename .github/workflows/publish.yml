@@ -16,14 +16,9 @@ on:
         required: true
         type: string
 
-env:
-  RELEASE_PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
-
 jobs:
   release-new-version:
     runs-on: ubuntu-latest
-
-    if: ${{ github.event.inputs.trigger_phrase == env.RELEASE_PASSWORD }}
     steps:
       # Checkout project repository
       - name: Checkout
