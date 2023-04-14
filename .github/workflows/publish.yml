@@ -11,14 +11,12 @@ on:
           - patch
           - minor
           - major
-      trigger_phrase:
-        description: 'Trigger phrase'
-        required: true
-        type: string
 
 jobs:
   release-new-version:
     runs-on: ubuntu-latest
+
+    if: ${{ github.event.inputs.trigger_phrase == env.RELEASE_PASSWORD }}
     steps:
       # Checkout project repository
       - name: Checkout
@@ -84,4 +82,3 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
