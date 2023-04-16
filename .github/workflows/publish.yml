@@ -57,7 +57,9 @@ jobs:
           git tag ${{ env.NEW_VERSION }}
 
       # Publish version to public repository
-      - run: npm publish
+      - run: | 
+        cd Hello
+        npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
