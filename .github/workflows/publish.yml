@@ -59,9 +59,11 @@ jobs:
       # Publish version to public repository
       - run: |
           cd Hello
+          npm version $RELEASE_TYPE
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_TYPE: ${{ inputs.release-type }}
 
       # Push repository changes
       - name: Push changes to repository
